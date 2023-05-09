@@ -1,0 +1,19 @@
+{
+    "name": "projetinho/dev-pro",
+    "description": "php-projeto",
+    "authors": [
+        {
+            "name": "Lailson Sousa",
+            "email": "lailson4545@hotmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "files": [
+            "app/helpers/constants.php"
+        ],
+        "psr-4": {
+            "app\\": "app"
+        }
+    }
+}
