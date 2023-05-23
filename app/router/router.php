@@ -21,7 +21,7 @@ function regularExpressionArrayRoutes($uri,$routes)
         $routes,
         function ($value) use ($uri) {
             $regex = str_replace('/','\/',ltrim($value,'/'));
-//                    return preg_match("/^$regex$/",ltrim($uri,'/'));
+                    return preg_match("/^$regex$/",ltrim($uri,'/'));
             return $regex;
         },
         ARRAY_FILTER_USE_KEY
@@ -33,7 +33,7 @@ function params($uri, $matchedUri)
     if (!empty($matchedUri)) {
         $matchedToParams = array_keys($matchedUri)[0];
         return array_diff(
-            explode('/',ltrim($uri, '/')),
+            $uri,
             explode('/',ltrim($matchedToParams, '/'))
         );
     }
@@ -42,7 +42,6 @@ function params($uri, $matchedUri)
 
 function formatParams($uri, $params)
 {
-    $uri = explode('/', ltrim($uri,'/'));
     $paramsData = [];
     foreach ($params as $index => $param){
         $paramsData[$uri[$index - 1]] = $param;
@@ -57,16 +56,17 @@ function router()
     $routes = routes();
     $matchedUri = exactMatchUriRoutes($uri,$routes);
 
+    $params = [];
     if (empty($matchedUri)) {
         $matchedUri = regularExpressionArrayRoutes($uri,$routes);
+        $uri = explode('/', ltrim($uri,'/'));
         $params = params($uri, $matchedUri);
         $params = params($uri,$params);
-        var_dump($params);
-        die();
     }
 
-
-
-    var_dump($matchedUri);
-
+    if (!empty($matchedUri)) {
+        loadController($matchedUri, $params);
+        return;
+    }
+    throw new Exception('Algo Deu Errado!');
 }
