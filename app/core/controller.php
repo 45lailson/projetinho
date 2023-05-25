@@ -2,7 +2,7 @@
 
 function loadController($matchedUri, $params)
 {
-    [$controller, $method] = explode('@', array_values($matchedUri)[0]);
+    list($controller, $method) = explode('@', array_values($matchedUri)[0]);
     $controllerWithNamespace = CONTROLLER_PATH.$controller;
 
     if (!class_exists($controllerWithNamespace)) {
@@ -15,5 +15,5 @@ function loadController($matchedUri, $params)
         throw new Exception("O Método {$method} não existe no controller {$controller} ");
     }
 
-    $controllerInstance->$method($params);
+    return $controllerInstance->$method($params);
 }

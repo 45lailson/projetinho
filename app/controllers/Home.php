@@ -8,8 +8,10 @@ class Home
 {
     public function index($params)
     {
-        var_dump("Home");
-        die();
+        return [
+            'view' => 'home.php',
+            'data' => ['name' => 'Lailson']
+        ];
     }
 
 

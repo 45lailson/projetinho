@@ -65,8 +65,8 @@ function router()
     }
 
     if (!empty($matchedUri)) {
-        loadController($matchedUri, $params);
-        return;
+        return loadController($matchedUri, $params);
+
     }
     throw new Exception('Algo Deu Errado!');
 }
